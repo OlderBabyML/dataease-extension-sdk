@@ -97,6 +97,9 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+    <if test="pageSize != null and goPage != null">
+      limit #{goPage},#{pageSize}
+    </if>
   </select>
   <select id="selectByExample" parameterType="io.dataease.plugins.common.base.domain.SysLogExample" resultMap="BaseResultMap">
     select

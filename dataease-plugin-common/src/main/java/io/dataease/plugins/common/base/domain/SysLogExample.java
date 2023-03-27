@@ -6,6 +6,10 @@ import java.util.List;
 public class SysLogExample {
     protected String orderByClause;
 
+    protected Integer goPage;
+
+    protected Integer pageSize;
+
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
@@ -61,6 +65,22 @@ public class SysLogExample {
         oredCriteria.clear();
         orderByClause = null;
         distinct = false;
+    }
+
+    public Integer getGoPage() {
+        return goPage;
+    }
+
+    public void setGoPage(Integer goPage) {
+        this.goPage = goPage;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 
     protected abstract static class GeneratedCriteria {

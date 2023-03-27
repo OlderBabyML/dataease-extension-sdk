@@ -83,7 +83,7 @@
   <sql id="Base_Column_List">
     user_id, dept_id, username, nick_name, gender, phone, email, `password`, is_admin, 
     enabled, create_by, update_by, pwd_reset_time, create_time, update_time, `language`, 
-    `from`, sub, phone_prefix
+    `from`, sub, phone_prefix, token
   </sql>
   <select id="selectByExample" parameterType="io.dataease.plugins.common.base.domain.SysUserExample" resultMap="BaseResultMap">
     select

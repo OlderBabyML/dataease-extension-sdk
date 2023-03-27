@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.dataease.plugins.common.base.mapper.SchedulerIndexMapper">
+  <resultMap id="BaseResultMap" type="io.dataease.plugins.common.base.domain.SchedulerIndex">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="chart_id" jdbcType="VARCHAR" property="chartId" />
+    <result column="format" jdbcType="VARCHAR" property="format" />
+    <result column="time_number" jdbcType="BIGINT" property="timeNumber" />
+    <result column="time_type" jdbcType="VARCHAR" property="timeType" />
+    <result column="cron" jdbcType="VARCHAR" property="cron" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="io.dataease.plugins.common.base.domain.SchedulerIndexWithBLOBs">
+    <result column="index_field" jdbcType="LONGVARCHAR" property="indexField" />
+    <result column="time_field" jdbcType="LONGVARCHAR" property="timeField" />
+    <result column="rules" jdbcType="LONGVARCHAR" property="rules" />
+    <result column="sends" jdbcType="LONGVARCHAR" property="sends" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, chart_id, format, time_number, time_type, cron
+  </sql>
+  <sql id="Blob_Column_List">
+    index_field, time_field, rules, sends, status
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="io.dataease.plugins.common.base.domain.SchedulerIndexExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from scheduler_index
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="io.dataease.plugins.common.base.domain.SchedulerIndexExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from scheduler_index
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from scheduler_index
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from scheduler_index
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="io.dataease.plugins.common.base.domain.SchedulerIndexExample">
+    delete from scheduler_index
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="io.dataease.plugins.common.base.domain.SchedulerIndexWithBLOBs">
+    insert into scheduler_index (id, chart_id, format,
+      time_number, time_type, cron,
+      index_field, time_field, rules,
+      sends,status)
+    values (#{id,jdbcType=BIGINT}, #{chartId,jdbcType=VARCHAR}, #{format,jdbcType=VARCHAR},
+      #{timeNumber,jdbcType=BIGINT}, #{timeType,jdbcType=VARCHAR}, #{cron,jdbcType=VARCHAR},
+      #{indexField,jdbcType=LONGVARCHAR}, #{timeField,jdbcType=LONGVARCHAR}, #{rules,jdbcType=LONGVARCHAR},
+      #{sends,jdbcType=LONGVARCHAR},#{status,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="io.dataease.plugins.common.base.domain.SchedulerIndexWithBLOBs">
+    insert into scheduler_index
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="chartId != null">
+        chart_id,
+      </if>
+      <if test="format != null">
+        format,
+      </if>
+      <if test="timeNumber != null">
+        time_number,
+      </if>
+      <if test="timeType != null">
+        time_type,
+      </if>
+      <if test="cron != null">
+        cron,
+      </if>
+      <if test="indexField != null">
+        index_field,
+      </if>
+      <if test="timeField != null">
+        time_field,
+      </if>
+      <if test="rules != null">
+        rules,
+      </if>
+      <if test="sends != null">
+        sends,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="chartId != null">
+        #{chartId,jdbcType=VARCHAR},
+      </if>
+      <if test="format != null">
+        #{format,jdbcType=VARCHAR},
+      </if>
+      <if test="timeNumber != null">
+        #{timeNumber,jdbcType=BIGINT},
+      </if>
+      <if test="timeType != null">
+        #{timeType,jdbcType=VARCHAR},
+      </if>
+      <if test="cron != null">
+        #{cron,jdbcType=VARCHAR},
+      </if>
+      <if test="indexField != null">
+        #{indexField,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="timeField != null">
+        #{timeField,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="rules != null">
+        #{rules,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="sends != null">
+        #{sends,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="io.dataease.plugins.common.base.domain.SchedulerIndexExample" resultType="java.lang.Long">
+    select count(*) from scheduler_index
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update scheduler_index
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.chartId != null">
+        chart_id = #{record.chartId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.format != null">
+        format = #{record.format,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timeNumber != null">
+        time_number = #{record.timeNumber,jdbcType=BIGINT},
+      </if>
+      <if test="record.timeType != null">
+        time_type = #{record.timeType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cron != null">
+        cron = #{record.cron,jdbcType=VARCHAR},
+      </if>
+      <if test="record.indexField != null">
+        index_field = #{record.indexField,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.timeField != null">
+        time_field = #{record.timeField,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.rules != null">
+        rules = #{record.rules,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.sends != null">
+        sends = #{record.sends,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update scheduler_index
+    set id = #{record.id,jdbcType=BIGINT},
+      chart_id = #{record.chartId,jdbcType=VARCHAR},
+      format = #{record.format,jdbcType=VARCHAR},
+      time_number = #{record.timeNumber,jdbcType=BIGINT},
+      time_type = #{record.timeType,jdbcType=VARCHAR},
+      cron = #{record.cron,jdbcType=VARCHAR},
+      index_field = #{record.indexField,jdbcType=LONGVARCHAR},
+      time_field = #{record.timeField,jdbcType=LONGVARCHAR},
+      rules = #{record.rules,jdbcType=LONGVARCHAR},
+      sends = #{record.sends,jdbcType=LONGVARCHAR},
+      status = #{status,jdbcType=TINYINT},
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update scheduler_index
+    set id = #{record.id,jdbcType=BIGINT},
+      chart_id = #{record.chartId,jdbcType=VARCHAR},
+      format = #{record.format,jdbcType=VARCHAR},
+      time_number = #{record.timeNumber,jdbcType=BIGINT},
+      time_type = #{record.timeType,jdbcType=VARCHAR},
+      cron = #{record.cron,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="io.dataease.plugins.common.base.domain.SchedulerIndexWithBLOBs">
+    update scheduler_index
+    <set>
+      <if test="chartId != null">
+        chart_id = #{chartId,jdbcType=VARCHAR},
+      </if>
+      <if test="format != null">
+        format = #{format,jdbcType=VARCHAR},
+      </if>
+      <if test="timeNumber != null">
+        time_number = #{timeNumber,jdbcType=BIGINT},
+      </if>
+      <if test="timeType != null">
+        time_type = #{timeType,jdbcType=VARCHAR},
+      </if>
+      <if test="cron != null">
+        cron = #{cron,jdbcType=VARCHAR},
+      </if>
+      <if test="indexField != null">
+        index_field = #{indexField,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="timeField != null">
+        time_field = #{timeField,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="rules != null">
+        rules = #{rules,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="sends != null">
+        sends = #{sends,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="io.dataease.plugins.common.base.domain.SchedulerIndexWithBLOBs">
+    update scheduler_index
+    set chart_id = #{chartId,jdbcType=VARCHAR},
+      format = #{format,jdbcType=VARCHAR},
+      time_number = #{timeNumber,jdbcType=BIGINT},
+      time_type = #{timeType,jdbcType=VARCHAR},
+      cron = #{cron,jdbcType=VARCHAR},
+      index_field = #{indexField,jdbcType=LONGVARCHAR},
+      time_field = #{timeField,jdbcType=LONGVARCHAR},
+      rules = #{rules,jdbcType=LONGVARCHAR},
+      sends = #{sends,jdbcType=LONGVARCHAR},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="io.dataease.plugins.common.base.domain.SchedulerIndex">
+    update scheduler_index
+    set chart_id = #{chartId,jdbcType=VARCHAR},
+      format = #{format,jdbcType=VARCHAR},
+      time_number = #{timeNumber,jdbcType=BIGINT},
+      time_type = #{timeType,jdbcType=VARCHAR},
+      cron = #{cron,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
